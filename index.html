@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贵州移动下卡查询</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #667eea;
+        }
+        .preview {
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        .preview strong {
+            color: #333;
+            letter-spacing: 1px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        #queryBtn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #queryBtn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        #queryBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .apply-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+        }
+        .order-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+        }
+        .activate-btn {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+        .activate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(67, 233, 123, 0.4);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            display: none;
+        }
+        .result.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        .result.error {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        .result.loading {
+            display: block;
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #90caf9;
+        }
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #1565c0;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .hint {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        .disclaimer {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff3e0;
+            border: 1px solid #ffcc80;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 12px;
+            color: #e65100;
+        }
+        .disclaimer p {
+            margin: 4px 0;
+            line-height: 1.5;
+        }
+        .disclaimer strong {
+            color: #bf360c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>贵州移动下卡查询</h1>
+        <p class="subtitle">输入6位数字，自动补全为18位身份证号</p>
+
+        <div class="input-group">
+            <label for="shortId">请输入6位地区码或18位身份证号</label>
+            <input type="text" id="shortId" maxlength="18" placeholder="511602 或 511602000000000000" autocomplete="off">
+        </div>
+
+        <div class="input-group">
+            <label for="suitId">选择套餐</label>
+            <select id="suitId">
+                <option value="19747">小黔卡39元档 (19747)</option>
+                <option value="19727">小黔卡49元档 (19727)</option>
+                <option value="20069">AI家嘉享礼包169元 (20069)</option>
+                <option value="20068">AI家嘉享礼包99元 (20068)</option>
+                <option value="20047">AI家嘉享礼包79元 (20047)</option>
+            </select>
+        </div>
+
+        <div class="preview">
+            查询号码：<strong id="fullId">-</strong>
+        </div>
+
+        <button id="queryBtn" onclick="query()">查询</button>
+
+        <button id="applyBtn" onclick="goApply()" class="apply-btn">去下卡</button>
+
+        <button onclick="window.open('https://wap.gz.10086.cn/smphone/simcard/quarSimOrderByCond.do','_blank')" class="order-btn">查询下卡订单</button>
+
+        <button onclick="document.getElementById('activateModal').style.display='flex'" class="activate-btn">激活号卡</button>
+
+        <!-- 激活号卡弹窗 -->
+        <div id="activateModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:999;justify-content:center;align-items:center;">
+            <div style="background:white;border-radius:16px;padding:30px;max-width:340px;width:90%;text-align:center;position:relative;">
+                <button onclick="document.getElementById('activateModal').style.display='none'" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#999;width:auto;padding:0;">✕</button>
+                <h2 style="margin-bottom:6px;font-size:18px;color:#333;">激活号卡</h2>
+                <p style="color:#888;font-size:13px;margin-bottom:16px;">请使用移动App扫描下方二维码完成激活</p>
+                <img src="data:image/png;base64,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" style="width:200px;height:200px;border:2px solid #eee;border-radius:8px;margin-bottom:16px;">
+            </div>
+        </div>
+
+        <div id="result" class="result"></div>
+
+        <p class="hint">提示：输入6位地区码自动补0，或直接输入18位完整身份证号</p>
+
+        <div class="disclaimer">
+            <p><strong>免责声明</strong></p>
+            <p>本工具仅供学习测试和技术交流使用，请勿用于任何非法用途。</p>
+            <p>使用本工具所产生的一切后果由使用者自行承担，与开发者无关。</p>
+        </div>
+    </div>
+
+    <script>
+        const shortIdInput = document.getElementById('shortId');
+        const suitIdSelect = document.getElementById('suitId');
+        const fullIdDisplay = document.getElementById('fullId');
+        const queryBtn = document.getElementById('queryBtn');
+        const resultDiv = document.getElementById('result');
+
+        // 处理输入号码
+        function processID(input) {
+            input = input.replace(/\D/g, '');
+            if (input.length === 6) {
+                return input.padEnd(18, '0');
+            } else if (input.length === 18) {
+                return input;
+            }
+            return input;
+        }
+
+        // 输入处理
+        shortIdInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            e.target.value = value;
+
+            if (value.length > 0) {
+                const processed = processID(value);
+                if (value.length === 6) {
+                    fullIdDisplay.innerHTML = processed + ' <span style="color:#999;font-size:12px;">(自动补0)</span>';
+                } else if (value.length === 18) {
+                    fullIdDisplay.innerHTML = processed + ' <span style="color:#4caf50;font-size:12px;">(完整号码)</span>';
+                } else {
+                    fullIdDisplay.textContent = processed;
+                }
+            } else {
+                fullIdDisplay.textContent = '-';
+            }
+        });
+
+        // 查询函数
+        async function query() {
+            const shortId = shortIdInput.value.trim();
+
+            if (shortId.length === 0) {
+                showResult('error', '请输入6位地区码或18位身份证号');
+                return;
+            }
+
+            if (shortId.length !== 6 && shortId.length !== 18) {
+                showResult('error', '请输入6位地区码或完整的18位身份证号');
+                return;
+            }
+
+            const fullId = processID(shortId);
+            const suitId = suitIdSelect.value;
+
+            queryBtn.disabled = true;
+            showResult('loading', '<span class="spinner"></span>查询中，请稍候...');
+
+            try {
+                const response = await fetch('/api/check', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ idCard: fullId, suitId: suitId })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    showResult('error', '查询失败：' + data.error);
+                } else {
+                    const statusClass = data.canApply ? 'success' : 'error';
+                    const statusIcon = data.canApply ? '✓' : '✗';
+                    let resultHTML = `<div style="font-size: 24px; margin-bottom: 15px;">${statusIcon} ${data.status}</div>`;
+                    resultHTML += '<div style="font-size: 12px; color: #666; margin-top: 10px;">';
+                    resultHTML += '<b>原始返回:</b><br>';
+                    for (const [key, value] of Object.entries(data.raw || {})) {
+                        resultHTML += `${key}: ${value}<br>`;
+                    }
+                    resultHTML += '</div>';
+                    showResult(statusClass, resultHTML);
+                }
+            } catch (err) {
+                showResult('error', '网络错误，请检查后端服务是否启动');
+            } finally {
+                queryBtn.disabled = false;
+            }
+        }
+
+        // 去下卡
+        function goApply() {
+            const suitId = suitIdSelect.value;
+            const url = `https://wap.gz.10086.cn/smphone/newSimcard/checkNumber.do?suit_type=117&simcard_suit_id=${suitId}`;
+            window.open(url, '_blank');
+        }
+
+        // 显示结果
+        function showResult(type, message) {
+            resultDiv.className = 'result ' + type;
+            resultDiv.innerHTML = message;
+        }
+
+        // 回车键触发查询
+        shortIdInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                query();
+            }
+        });
+    </script>
+</body>
+</html>
