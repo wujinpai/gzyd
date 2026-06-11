@@ -185,6 +185,140 @@
         .disclaimer strong {
             color: #bf360c;
         }
+
+        /* 激活号卡弹窗样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        @keyframes modalSlideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            width: auto;
+            padding: 4px 8px;
+            margin-top: 0;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #333;
+        }
+        .modal-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 6px;
+            margin-top: 0;
+            padding-right: 30px;
+        }
+        .modal-desc {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .qr-wrapper {
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 16px;
+            padding: 12px;
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .qr-wrapper img,
+        .qr-wrapper canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        .qr-input-group {
+            margin-bottom: 12px;
+        }
+        .qr-input-group label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+        .qr-input-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .qr-input-group input:focus {
+            border-color: #667eea;
+        }
+        .qr-gen-btn {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+        .qr-gen-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(67, 233, 123, 0.3);
+        }
+        .qr-content-display {
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #666;
+            word-break: break-all;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -218,17 +352,7 @@
 
         <button onclick="window.open('https://wap.gz.10086.cn/smphone/simcard/quarSimOrderByCond.do','_blank')" class="order-btn">查询下卡订单</button>
 
-        <button onclick="document.getElementById('activateModal').style.display='flex'" class="activate-btn">激活号卡</button>
-
-        <!-- 激活号卡弹窗 -->
-        <div id="activateModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:999;justify-content:center;align-items:center;">
-            <div style="background:white;border-radius:16px;padding:30px;max-width:340px;width:90%;text-align:center;position:relative;">
-                <button onclick="document.getElementById('activateModal').style.display='none'" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#999;width:auto;padding:0;">✕</button>
-                <h2 style="margin-bottom:6px;font-size:18px;color:#333;">激活号卡</h2>
-                <p style="color:#888;font-size:13px;margin-bottom:16px;">请使用移动App扫描下方二维码完成激活</p>
-                <img src="data:image/png;base64,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" style="width:200px;height:200px;border:2px solid #eee;border-radius:8px;margin-bottom:16px;">
-            </div>
-        </div>
+        <button onclick="openActivateModal()" class="activate-btn">激活号卡</button>
 
         <div id="result" class="result"></div>
 
@@ -241,6 +365,25 @@
         </div>
     </div>
 
+    <!-- 激活号卡弹窗 -->
+    <div id="activateModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeActivateModal()" aria-label="关闭">✕</button>
+            <h2 class="modal-title">激活号卡</h2>
+            <p class="modal-desc">请使用中国移动App扫描下方二维码完成激活</p>
+            <div class="qr-wrapper">
+                <canvas id="qrCanvas"></canvas>
+            </div>
+            <div class="qr-input-group">
+                <label for="qrInput">自定义二维码内容（可选）</label>
+                <input type="text" id="qrInput" placeholder="输入激活码/号码/链接，点击生成" maxlength="200">
+            </div>
+            <button class="qr-gen-btn" onclick="generateQR()">生成二维码</button>
+            <div id="qrContent" class="qr-content-display" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <script>
         const shortIdInput = document.getElementById('shortId');
         const suitIdSelect = document.getElementById('suitId');
@@ -248,7 +391,6 @@
         const queryBtn = document.getElementById('queryBtn');
         const resultDiv = document.getElementById('result');
 
-        // 处理输入号码
         function processID(input) {
             input = input.replace(/\D/g, '');
             if (input.length === 6) {
@@ -259,7 +401,6 @@
             return input;
         }
 
-        // 输入处理
         shortIdInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             e.target.value = value;
@@ -278,7 +419,6 @@
             }
         });
 
-        // 查询函数
         async function query() {
             const shortId = shortIdInput.value.trim();
 
@@ -330,23 +470,129 @@
             }
         }
 
-        // 去下卡
         function goApply() {
             const suitId = suitIdSelect.value;
             const url = `https://wap.gz.10086.cn/smphone/newSimcard/checkNumber.do?suit_type=117&simcard_suit_id=${suitId}`;
             window.open(url, '_blank');
         }
 
-        // 显示结果
         function showResult(type, message) {
             resultDiv.className = 'result ' + type;
             resultDiv.innerHTML = message;
         }
 
-        // 回车键触发查询
         shortIdInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 query();
+            }
+        });
+
+        // ========== 激活号卡二维码功能 ==========
+        function openActivateModal() {
+            document.getElementById('activateModal').classList.add('active');
+            // 弹窗打开时立即生成默认二维码
+            generateDefaultQR();
+        }
+
+        function closeActivateModal() {
+            document.getElementById('activateModal').classList.remove('active');
+        }
+
+        // 点击遮罩关闭弹窗
+        document.getElementById('activateModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeActivateModal();
+            }
+        });
+
+        function renderQRCode(text) {
+            try {
+                const canvas = document.getElementById('qrCanvas');
+                if (!canvas) return;
+
+                if (typeof qrcode !== 'function') {
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = 400;
+                    canvas.height = 400;
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(0, 0, 400, 400);
+                    ctx.fillStyle = '#333';
+                    ctx.font = '16px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('二维码库加载失败，请检查网络', 200, 200);
+                    return;
+                }
+
+                const qr = qrcode(0, 'M');
+                qr.addData(text);
+                qr.make();
+
+                // 使用较高的内部分辨率（400x400），由 CSS 缩放到容器大小
+                const targetSize = 400;
+                const modules = qr.getModuleCount();
+                const cellSize = Math.floor(targetSize / modules);
+                const actualSize = modules * cellSize;
+
+                canvas.width = actualSize;
+                canvas.height = actualSize;
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                canvas.style.display = 'block';
+
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, actualSize, actualSize);
+                ctx.fillStyle = '#000000';
+
+                for (let row = 0; row < modules; row++) {
+                    for (let col = 0; col < modules; col++) {
+                        if (qr.isDark(row, col)) {
+                            ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+                        }
+                    }
+                }
+
+                const contentDiv = document.getElementById('qrContent');
+                if (contentDiv) {
+                    contentDiv.style.display = 'block';
+                    contentDiv.textContent = '二维码内容: ' + text;
+                }
+            } catch (err) {
+                const canvas = document.getElementById('qrCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                canvas.width = 400;
+                canvas.height = 400;
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(0, 0, 400, 400);
+                ctx.fillStyle = '#c62828';
+                ctx.font = '16px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('生成失败：' + (err.message || '未知错误'), 200, 200);
+            }
+        }
+
+        function generateDefaultQR() {
+            renderQRCode('https://wap.gz.10086.cn/smphone/simcard/quarSimOrderByCond.do');
+        }
+
+        function generateQR() {
+            const input = document.getElementById('qrInput').value.trim();
+            if (!input) {
+                generateDefaultQR();
+                return;
+            }
+            renderQRCode(input);
+        }
+
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeActivateModal();
             }
         });
     </script>
