@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>贵州移动下卡查询</title>
+    <title>贵州移动工具</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
@@ -21,111 +17,143 @@
         }
         .container {
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 400px;
+            border-radius: 16px;
+            padding: 40px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         h1 {
             text-align: center;
             color: #333;
-            font-size: 22px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 24px;
         }
         .subtitle {
             text-align: center;
             color: #888;
-            font-size: 13px;
-            margin-bottom: 25px;
+            font-size: 14px;
+            margin-bottom: 30px;
         }
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
-        .input-group label {
+        label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: #555;
             font-size: 14px;
             font-weight: 500;
         }
-        .input-group input,
-        .input-group select {
+        input[type="text"], select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 16px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 16px;
-            transition: border-color 0.3s;
-            outline: none;
+            transition: all 0.3s;
+            background: white;
         }
-        .input-group input:focus,
-        .input-group select:focus {
+        input[type="text"] {
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        input[type="text"]:focus, select:focus {
+            outline: none;
             border-color: #667eea;
         }
         .preview {
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
             background: #f5f5f5;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 14px;
+            text-align: center;
             color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-family: monospace;
         }
         .preview strong {
-            color: #333;
-            letter-spacing: 1px;
+            color: #667eea;
+            font-size: 16px;
         }
         button {
             width: 100%;
             padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
             border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        #queryBtn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        #queryBtn:hover:not(:disabled) {
+        button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
-        #queryBtn:disabled {
+        button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
         .apply-btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
         }
-        .apply-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+        .apply-btn:hover:not(:disabled) {
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+        .apply-btn2 {
+            margin-top: 6px;
+            background: linear-gradient(135deg, #7e57c2 0%, #4527a0 100%);
+            font-size: 14px;
+            padding: 12px;
+        }
+        .apply-btn2:hover {
+            box-shadow: 0 8px 20px rgba(126, 87, 194, 0.4);
         }
         .order-btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #ff9800 0%, #e65100 100%);
         }
         .order-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
         }
         .activate-btn {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: white;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
         }
         .activate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(67, 233, 123, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 188, 212, 0.4);
+        }
+        .iccid-btn {
+            margin-top: 8px;
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        }
+        .iccid-btn:hover {
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+        }
+        .order-btn2 {
+            margin-top: 8px;
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+        }
+        .order-btn2:hover {
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+        .btn-row {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn-row button {
+            flex: 1;
+            margin-top: 0;
+            font-size: 13px;
+            padding: 10px;
         }
         .result {
             margin-top: 20px;
-            padding: 15px;
+            padding: 16px;
             border-radius: 10px;
             font-size: 14px;
             display: none;
@@ -185,8 +213,49 @@
         .disclaimer strong {
             color: #bf360c;
         }
-
-        /* 激活号卡弹窗样式 */
+        /* Tab导航样式 */
+        .tab-nav {
+            display: flex;
+            margin-bottom: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 4px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px 8px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #666;
+            font-weight: 500;
+        }
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        /* Tab内容样式 */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .common-section {
+            margin-top: 20px;
+        }
+        .channel2-notice {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        /* 弹窗样式 */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -194,8 +263,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.65);
-            z-index: 9999;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -208,12 +277,12 @@
         .modal-content {
             background: white;
             border-radius: 16px;
-            padding: 24px;
-            width: 100%;
+            padding: 30px;
             max-width: 340px;
+            width: 100%;
             text-align: center;
             position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             animation: modalSlideIn 0.3s ease-out;
         }
         @keyframes modalSlideIn {
@@ -222,11 +291,11 @@
         }
         .modal-close {
             position: absolute;
-            top: 10px;
-            right: 12px;
+            top: 12px;
+            right: 16px;
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
             color: #999;
             width: auto;
@@ -241,14 +310,26 @@
             font-size: 18px;
             color: #333;
             margin-bottom: 6px;
-            margin-top: 0;
-            padding-right: 30px;
         }
         .modal-desc {
             color: #888;
             font-size: 13px;
             margin-bottom: 16px;
             line-height: 1.5;
+        }
+        .modal-content input[type="text"] {
+            text-align: left;
+            letter-spacing: normal;
+        }
+        .modal-content .iccid-input-group {
+            margin-bottom: 10px;
+        }
+        .modal-content .iccid-notice {
+            color: #f44336;
+            font-size: 11px;
+            margin-bottom: 12px;
+            text-align: left;
+            line-height: 1.4;
         }
         .qr-wrapper {
             width: 240px;
@@ -264,17 +345,11 @@
             overflow: hidden;
             box-sizing: border-box;
         }
-        .qr-wrapper img,
         .qr-wrapper canvas {
             display: block;
             width: 100%;
             height: 100%;
-            max-width: 100%;
-            max-height: 100%;
             object-fit: contain;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
         }
         .qr-input-group {
             margin-bottom: 12px;
@@ -294,6 +369,8 @@
             font-size: 14px;
             outline: none;
             transition: border-color 0.2s;
+            text-align: left;
+            letter-spacing: normal;
         }
         .qr-input-group input:focus {
             border-color: #667eea;
@@ -309,54 +386,100 @@
             transform: translateY(-1px);
             box-shadow: 0 3px 12px rgba(67, 233, 123, 0.3);
         }
-        .qr-content-display {
-            margin-top: 10px;
-            padding: 8px 10px;
-            background: #f5f5f5;
-            border-radius: 6px;
-            font-size: 11px;
-            color: #666;
-            word-break: break-all;
-            line-height: 1.4;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>贵州移动下卡查询</h1>
+        <h1>贵州移动工具</h1>
         <p class="subtitle">输入6位数字，自动补全为18位身份证号</p>
 
-        <div class="input-group">
-            <label for="shortId">请输入6位地区码或18位身份证号</label>
-            <input type="text" id="shortId" maxlength="18" placeholder="511602 或 511602000000000000" autocomplete="off">
+        <!-- Tab导航 -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('tab1')">渠道1（老渠道）</button>
+            <button class="tab-btn" onclick="switchTab('tab2')">渠道2（新渠道）</button>
         </div>
 
-        <div class="input-group">
-            <label for="suitId">选择套餐</label>
-            <select id="suitId">
-                <option value="19747">小黔卡39元档 (19747)</option>
-                <option value="19727">小黔卡49元档 (19727)</option>
-                <option value="20069">AI家嘉享礼包169元 (20069)</option>
-                <option value="20068">AI家嘉享礼包99元 (20068)</option>
-                <option value="20047">AI家嘉享礼包79元 (20047)</option>
-            </select>
+        <!-- 渠道1内容 -->
+        <div id="tab1" class="tab-content active">
+            <div class="input-group">
+                <label for="shortId">请输入6位地区码或18位身份证号</label>
+                <input type="text" id="shortId" maxlength="18" placeholder="511602 或 511602000000000000" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label for="suitId">选择套餐</label>
+                <select id="suitId">
+                    <option value="19747">小黔卡39元档 (19747)</option>
+                    <option value="19727">小黔卡49元档 (19727)</option>
+                    <option value="20069">AI家嘉享礼包169元 (20069)</option>
+                    <option value="20068">AI家嘉享礼包99元 (20068)</option>
+                    <option value="20047">AI家嘉享礼包79元 (20047)</option>
+                </select>
+            </div>
+
+            <div class="preview">
+                查询号码：<strong id="fullId">-</strong>
+            </div>
+
+            <button id="queryBtn" onclick="query()">查询能否下卡</button>
+            <div id="result" class="result"></div>
+
+            <div class="btn-row">
+                <button id="applyBtn" onclick="goApply()" class="apply-btn">去下卡</button>
+                <button onclick="window.open('https://wap.gz.10086.cn/smphone/simcard/quarSimOrderByCond.do','_blank')" class="order-btn">查订单</button>
+            </div>
         </div>
 
-        <div class="preview">
-            查询号码：<strong id="fullId">-</strong>
+        <!-- 渠道2内容 -->
+        <div id="tab2" class="tab-content">
+            <div class="channel2-notice">
+                <p style="color:#4caf50;font-size:13px;margin-bottom:10px;">✅ 支持外省用户下单</p>
+            </div>
+            <button onclick="window.open('https://wap.gz.10086.cn/smphone/gzshop/shop/#/pages/card/cardSearch','_blank')" class="apply-btn2" style="width:100%;">新渠道下卡</button>
+            <button onclick="openIccidModal()" class="iccid-btn" style="width:100%;margin-top:10px;">查询ICCID</button>
+            <button onclick="window.open('https://wap.gz.10086.cn/smphone/gzshop/shop/#/order/order-search/index?userId=&mobile=','_blank')" class="order-btn2" style="width:100%;margin-top:10px;">新渠道订单查询</button>
         </div>
 
-        <button id="queryBtn" onclick="query()">查询</button>
+        <!-- 公共功能 -->
+        <div class="common-section">
+            <button onclick="openActivateModal()" class="activate-btn">激活号卡</button>
+            <p class="hint">提示：输入6位地区码自动补0，或直接输入18位完整身份证号</p>
+        </div>
 
-        <button id="applyBtn" onclick="goApply()" class="apply-btn">去下卡</button>
+        <!-- ICCID查询弹窗 -->
+        <div id="iccidModal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeIccidModal()" aria-label="关闭">✕</button>
+                <h2 class="modal-title">ICCID查询（新渠道）</h2>
+                <p class="modal-desc">输入身份证和收货手机号查询ICCID</p>
+                <div class="iccid-input-group">
+                    <input type="text" id="iccidUserId" placeholder="请输入身份证号（18位）" maxlength="18">
+                </div>
+                <div class="iccid-input-group">
+                    <input type="text" id="iccidMobile" placeholder="请输入收货手机号" maxlength="11">
+                </div>
+                <p class="iccid-notice">⚠️ 免责声明：本工具不收集、不存储任何用户输入信息，所有数据仅用于查询并直接转发至移动官方接口。介意者请勿使用本功能。</p>
+                <button onclick="queryICCID()" class="iccid-btn">查询ICCID</button>
+                <div id="iccidResult" class="result" style="margin-top:16px;"></div>
+            </div>
+        </div>
 
-        <button onclick="window.open('https://wap.gz.10086.cn/smphone/simcard/quarSimOrderByCond.do','_blank')" class="order-btn">查询下卡订单</button>
-
-        <button onclick="openActivateModal()" class="activate-btn">激活号卡</button>
-
-        <div id="result" class="result"></div>
-
-        <p class="hint">提示：输入6位地区码自动补0，或直接输入18位完整身份证号</p>
+        <!-- 激活号卡弹窗 -->
+        <div id="activateModal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeActivateModal()" aria-label="关闭">✕</button>
+                <h2 class="modal-title">激活号卡</h2>
+                <p class="modal-desc">请使用移动App扫描下方二维码完成激活</p>
+                <div class="qr-wrapper">
+                    <canvas id="qrCanvas"></canvas>
+                </div>
+                <div class="qr-input-group">
+                    <label for="qrInput">自定义二维码内容（可选）</label>
+                    <input type="text" id="qrInput" placeholder="输入激活码/号码/链接，点击生成" maxlength="200">
+                </div>
+                <button class="qr-gen-btn" onclick="generateQR()">生成二维码</button>
+            </div>
+        </div>
 
         <div class="disclaimer">
             <p><strong>免责声明</strong></p>
@@ -365,26 +488,16 @@
         </div>
     </div>
 
-    <!-- 激活号卡弹窗 -->
-    <div id="activateModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeActivateModal()" aria-label="关闭">✕</button>
-            <h2 class="modal-title">激活号卡</h2>
-            <p class="modal-desc">请使用中国移动App扫描下方二维码完成激活</p>
-            <div class="qr-wrapper">
-                <canvas id="qrCanvas"></canvas>
-            </div>
-            <div class="qr-input-group">
-                <label for="qrInput">自定义二维码内容（可选）</label>
-                <input type="text" id="qrInput" placeholder="输入激活码/号码/链接，点击生成" maxlength="200">
-            </div>
-            <button class="qr-gen-btn" onclick="generateQR()">生成二维码</button>
-            <div id="qrContent" class="qr-content-display" style="display:none;"></div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <script>
+        // Tab切换函数
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
         const shortIdInput = document.getElementById('shortId');
         const suitIdSelect = document.getElementById('suitId');
         const fullIdDisplay = document.getElementById('fullId');
@@ -404,7 +517,6 @@
         shortIdInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             e.target.value = value;
-
             if (value.length > 0) {
                 const processed = processID(value);
                 if (value.length === 6) {
@@ -421,17 +533,14 @@
 
         async function query() {
             const shortId = shortIdInput.value.trim();
-
             if (shortId.length === 0) {
                 showResult('error', '请输入6位地区码或18位身份证号');
                 return;
             }
-
             if (shortId.length !== 6 && shortId.length !== 18) {
                 showResult('error', '请输入6位地区码或完整的18位身份证号');
                 return;
             }
-
             const fullId = processID(shortId);
             const suitId = suitIdSelect.value;
 
@@ -441,14 +550,10 @@
             try {
                 const response = await fetch('/api/check', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ idCard: fullId, suitId: suitId })
                 });
-
                 const data = await response.json();
-
                 if (data.error) {
                     showResult('error', '查询失败：' + data.error);
                 } else {
@@ -487,65 +592,108 @@
             }
         });
 
-        // ========== 激活号卡二维码功能 ==========
-        function openActivateModal() {
-            document.getElementById('activateModal').classList.add('active');
-            // 弹窗打开时立即生成默认二维码
-            generateDefaultQR();
+        // ICCID查询
+        function openIccidModal() {
+            document.getElementById('iccidModal').classList.add('active');
+        }
+        function closeIccidModal() {
+            document.getElementById('iccidModal').classList.remove('active');
+            document.getElementById('iccidResult').style.display = 'none';
         }
 
+        async function queryICCID() {
+            const userId = document.getElementById('iccidUserId').value.trim();
+            const mobile = document.getElementById('iccidMobile').value.trim();
+            const resultDiv = document.getElementById('iccidResult');
+
+            if (!userId || userId.length !== 18) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '请输入正确的18位身份证号';
+                return;
+            }
+            if (!mobile || mobile.length !== 11) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '请输入正确的11位手机号';
+                return;
+            }
+
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result loading';
+            resultDiv.innerHTML = '<span class="spinner"></span>查询中...';
+
+            try {
+                const response = await fetch('/api/iccid', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: userId, mobile: mobile })
+                });
+                const data = await response.json();
+
+                if (data.error) {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = '查询失败：' + data.error;
+                    return;
+                }
+
+                if (data.iccid) {
+                    const iccid = data.iccid;
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `<div style="font-weight:bold;font-size:16px;">ICCID: ${iccid}</div>
+                        <div style="margin-top:8px;font-size:12px;color:#666;">
+                            <button onclick="navigator.clipboard.writeText('${iccid}').then(()=>this.textContent='已复制')" style="padding:6px 12px;background:#2196f3;color:white;border:none;border-radius:4px;cursor:pointer;">复制</button>
+                        </div>`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = data.msg || '查询失败';
+                }
+            } catch (err) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '查询出错：' + err.message;
+            }
+        }
+
+        // 激活号卡二维码
+        function openActivateModal() {
+            document.getElementById('activateModal').classList.add('active');
+            generateDefaultQR();
+        }
         function closeActivateModal() {
             document.getElementById('activateModal').classList.remove('active');
         }
-
-        // 点击遮罩关闭弹窗
-        document.getElementById('activateModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeActivateModal();
-            }
-        });
 
         function renderQRCode(text) {
             try {
                 const canvas = document.getElementById('qrCanvas');
                 if (!canvas) return;
-
                 if (typeof qrcode !== 'function') {
                     const ctx = canvas.getContext('2d');
                     canvas.width = 400;
                     canvas.height = 400;
-                    canvas.style.width = '100%';
-                    canvas.style.height = '100%';
                     ctx.fillStyle = '#fff';
                     ctx.fillRect(0, 0, 400, 400);
                     ctx.fillStyle = '#333';
                     ctx.font = '16px sans-serif';
                     ctx.textAlign = 'center';
-                    ctx.fillText('二维码库加载失败，请检查网络', 200, 200);
+                    ctx.fillText('二维码库加载失败', 200, 200);
                     return;
                 }
-
                 const qr = qrcode(0, 'M');
                 qr.addData(text);
                 qr.make();
-
-                // 使用较高的内部分辨率（400x400），由 CSS 缩放到容器大小
                 const targetSize = 400;
                 const modules = qr.getModuleCount();
                 const cellSize = Math.floor(targetSize / modules);
                 const actualSize = modules * cellSize;
-
                 canvas.width = actualSize;
                 canvas.height = actualSize;
                 canvas.style.width = '100%';
                 canvas.style.height = '100%';
-                canvas.style.display = 'block';
-
                 const ctx = canvas.getContext('2d');
                 ctx.fillStyle = '#ffffff';
                 ctx.fillRect(0, 0, actualSize, actualSize);
                 ctx.fillStyle = '#000000';
-
                 for (let row = 0; row < modules; row++) {
                     for (let col = 0; col < modules; col++) {
                         if (qr.isDark(row, col)) {
@@ -553,20 +701,12 @@
                         }
                     }
                 }
-
-                const contentDiv = document.getElementById('qrContent');
-                if (contentDiv) {
-                    contentDiv.style.display = 'block';
-                    contentDiv.textContent = '二维码内容: ' + text;
-                }
             } catch (err) {
                 const canvas = document.getElementById('qrCanvas');
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 canvas.width = 400;
                 canvas.height = 400;
-                canvas.style.width = '100%';
-                canvas.style.height = '100%';
                 ctx.fillStyle = '#fff';
                 ctx.fillRect(0, 0, 400, 400);
                 ctx.fillStyle = '#c62828';
@@ -593,7 +733,16 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeActivateModal();
+                closeIccidModal();
             }
+        });
+
+        // 点击遮罩关闭弹窗
+        document.getElementById('activateModal').addEventListener('click', function(e) {
+            if (e.target === this) closeActivateModal();
+        });
+        document.getElementById('iccidModal').addEventListener('click', function(e) {
+            if (e.target === this) closeIccidModal();
         });
     </script>
 </body>
